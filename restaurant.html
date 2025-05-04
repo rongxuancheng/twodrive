@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>疯狂小餐厅</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fff8f0;
+    }
+    h1 {
+      color: #d35400;
+    }
+    .stats {
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      background-color: #f39c12;
+      color: white;
+    }
+    button:hover {
+      background-color: #e67e22;
+    }
+    .upgrade {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍔 疯狂小餐厅</h1>
+  <div class="stats">
+    💰 金币：<span id="money">0</span><br>
+    👨‍🍳 每次做菜收入：<span id="income">10</span> 元<br>
+    ⚡ 顾客等待时间：<span id="wait">5</span> 秒
+  </div>
+
+  <button onclick="cook()">🍳 做菜给顾客</button>
+
+  <div class="upgrade">
+    <h3>升级项目</h3>
+    <button onclick="upgradeIncome()">💵 升级菜品（+10元） - 50金币</button><br>
+    <button onclick="upgradeSpeed()">⏱️ 加快上菜（-1秒） - 100金币</button>
+  </div>
+
+  <script>
+    let money = 0;
+    let income = 10;
+    let waitTime = 5;
+    let isCooking = false;
+
+    function cook() {
+      if (isCooking) return;
+      isCooking = true;
+      document.querySelector("button").innerText = "⏳ 做菜中...";
+      setTimeout(() => {
+        money += income;
+        document.getElementById("money").innerText = money;
+        document.querySelector("button").innerText = "🍳 做菜给顾客";
+        isCooking = false;
+      }, waitTime * 1000);
+    }
+
+    function upgradeIncome() {
+      if (money >= 50) {
+        money -= 50;
+        income += 10;
+        document.getElementById("money").innerText = money;
+        document.getElementById("income").innerText = income;
+      } else {
+        alert("金币不足！");
+      }
+    }
+
+    function upgradeSpeed() {
+      if (money >= 100 && waitTime > 1) {
+        money -= 100;
+        waitTime -= 1;
+        document.getElementById("money").innerText = money;
+        document.getElementById("wait").innerText = waitTime;
+      } else {
+        alert("金币不足或已达最快速度！");
+      }
+    }
+  </script>
+</body>
+</html>
